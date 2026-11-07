@@ -1,1 +1,18 @@
+name: Build MixingVST
+on:
+  push:
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Configure
+        run: cmake -B build -A x64
+      - name: Build
+        run: cmake --build build --config Release --target MixingVST_VST3 --parallel
+      - uses: actions/upload-artifact@v4
+        with:
+          name: MixingVST-Windows-VST3
+          path: build/MixingVST_artefacts/Release/VST3/MixingVST.vst3
 
